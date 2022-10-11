@@ -1,0 +1,300 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>关于消息队列【使用RabbitMQ】 | 圣逸の博客</title><meta name="description" content="前言目前做的项目为了统一爬虫策略（可配置化爬虫）和对抗反爬的一些手段，使用了消息队列。借此机会了解一下。 什么是消息队列消息队列，一般我们会简称它为MQ(Message Queue)，嗯，就是很直白的简写。 先不管消息(Message)这个词，来看看队列(Queue)，队列是一种先进先出的数据结构。   消息队列（Message Queue）是一种应用间的通信方式，消息发送后可以立即返回，由消息系"><meta name="keywords" content="架构"><meta name="author" content="Shinex"><meta name="copyright" content="Shinex"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/xiasy1.github.io/img/favicon.jpg"><link rel="canonical" href="https://xiasy1.gitub.io/posts/message_queue/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta property="og:type" content="article"><meta property="og:title" content="关于消息队列【使用RabbitMQ】"><meta property="og:url" content="https://xiasy1.gitub.io/posts/message_queue/"><meta property="og:site_name" content="圣逸の博客"><meta property="og:description" content="前言目前做的项目为了统一爬虫策略（可配置化爬虫）和对抗反爬的一些手段，使用了消息队列。借此机会了解一下。 什么是消息队列消息队列，一般我们会简称它为MQ(Message Queue)，嗯，就是很直白的简写。 先不管消息(Message)这个词，来看看队列(Queue)，队列是一种先进先出的数据结构。   消息队列（Message Queue）是一种应用间的通信方式，消息发送后可以立即返回，由消息系"><meta property="og:image" content="https://xiasy1.gitub.io/img/mq.png"><meta property="article:published_time" content="2021-12-27T04:03:58.609Z"><meta property="article:modified_time" content="2021-12-27T04:03:58.609Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/xiasy1.github.io/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><link rel="next" title="Node.js ☞☞ 【基于strapi的内容管理器使用篇】" href="https://xiasy1.gitub.io/posts/node/node02/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/xiasy1.github.io/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: {"text":"I,LOVE,YOU","fontSize":"15px"},
+  medium_zoom: true,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: true,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-12-27 12:03:58'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/xiasy1.github.io/img/favicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/xiasy1.github.io/archives/"><div class="headline">文章</div><div class="length_num">23</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/xiasy1.github.io/tags/"><div class="headline">标签</div><div class="length_num">14</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/xiasy1.github.io/categories/"><div class="headline">分类</div><div class="length_num">13</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/xiasy1.github.io/bangumis/"><i class="fa-fw fab fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page" href="/xiasy1.github.io/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li><li><a class="site-page" href="/xiasy1.github.io/books/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li><li><a class="site-page" href="/xiasy1.github.io/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/xiasy1.github.io/gallery/"><i class="fa-fw far fa-image"></i><span> 相册</span></a></li><li><a class="site-page" href="/xiasy1.github.io/home/"><i class="fa-fw fab fa-phoenix-framework"></i><span> 主页</span></a></li><li><a class="site-page" href="/xiasy1.github.io/box/"><i class="fa-fw fab fa-xbox"></i><span> 聚宝盒</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/contact/"><i class="fa-fw far fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page"><span> 关于</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/xiasy1.github.io/about/"><i class="fa-fw fa fa-heart"></i><span> 关于我</span></a></li><li><a class="site-page" href="https://console.leancloud.cn/" target="_blank" rel="noopener"><i class="fa-fw fa fa-link"></i><span> Valine评论后台</span></a></li></ul></div></div></div></div><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是消息队列"><span class="toc-number">2.</span> <span class="toc-text">什么是消息队列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用了消息队列有什么好处"><span class="toc-number">3.</span> <span class="toc-text">用了消息队列有什么好处</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-解耦"><span class="toc-number">3.1.</span> <span class="toc-text">1.解耦</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-异步"><span class="toc-number">3.2.</span> <span class="toc-text">2.异步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-削峰-限流"><span class="toc-number">3.3.</span> <span class="toc-text">3.削峰&#x2F;限流</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用消息队列有什么问题"><span class="toc-number">4.</span> <span class="toc-text">使用消息队列有什么问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-高可用"><span class="toc-number">4.1.</span> <span class="toc-text">1.高可用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-数据丢失问题"><span class="toc-number">4.2.</span> <span class="toc-text">2.数据丢失问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-其他"><span class="toc-number">4.3.</span> <span class="toc-text">3.其他</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#消息队列的类型介绍"><span class="toc-number">5.</span> <span class="toc-text">消息队列的类型介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RabbitMQ基本概念"><span class="toc-number">6.</span> <span class="toc-text">RabbitMQ基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#消息队列在node-js中的简单应用"><span class="toc-number">7.</span> <span class="toc-text">消息队列在node.js中的简单应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用amqplib模块"><span class="toc-number">7.1.</span> <span class="toc-text">使用amqplib模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生产者代码product-js"><span class="toc-number">7.2.</span> <span class="toc-text">生产者代码product.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#消费者代码consumer-js"><span class="toc-number">7.3.</span> <span class="toc-text">消费者代码consumer.js</span></a></li></ol></li></ol></div></div></div><div id="body-wrap"><div id="web_bg" data-type="photo"></div><header class="post-bg" id="page-header" style="background-image: url(/xiasy1.github.io/img/mq.png)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/xiasy1.github.io/">圣逸の博客</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/xiasy1.github.io/bangumis/"><i class="fa-fw fab fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page" href="/xiasy1.github.io/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li><li><a class="site-page" href="/xiasy1.github.io/books/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li><li><a class="site-page" href="/xiasy1.github.io/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/xiasy1.github.io/gallery/"><i class="fa-fw far fa-image"></i><span> 相册</span></a></li><li><a class="site-page" href="/xiasy1.github.io/home/"><i class="fa-fw fab fa-phoenix-framework"></i><span> 主页</span></a></li><li><a class="site-page" href="/xiasy1.github.io/box/"><i class="fa-fw fab fa-xbox"></i><span> 聚宝盒</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/contact/"><i class="fa-fw far fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page"><span> 关于</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/xiasy1.github.io/about/"><i class="fa-fw fa fa-heart"></i><span> 关于我</span></a></li><li><a class="site-page" href="https://console.leancloud.cn/" target="_blank" rel="noopener"><i class="fa-fw fa fa-link"></i><span> Valine评论后台</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">关于消息队列【使用RabbitMQ】</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2021-12-27 12:03:58"><i class="far fa-calendar-alt fa-fw"></i> 发表于 2021-12-27</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2021-12-27 12:03:58"><i class="fas fa-history fa-fw"></i> 更新于 2021-12-27</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fas fa-inbox fa-fw post-meta__icon"></i><a class="post-meta__categories" href="/xiasy1.github.io/categories/%E6%9E%B6%E6%9E%84/">架构</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta__icon"></i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span><span class="post-meta__separator">|</span><i class="far fa-comments fa-fw post-meta__icon"></i><span>评论数:</span><a href="/xiasy1.github.io/posts/message_queue/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count comment-count" data-xid="/xiasy1.github.io/posts/message_queue/" itemprop="commentCount"></span></a></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目前做的项目为了统一爬虫策略（可配置化爬虫）和对抗反爬的一些手段，使用了消息队列。借此机会了解一下。</p>
+<h2 id="什么是消息队列"><a href="#什么是消息队列" class="headerlink" title="什么是消息队列"></a>什么是消息队列</h2><p>消息队列，一般我们会简称它为MQ(Message Queue)，嗯，就是很直白的简写。</p>
+<p>先不管消息(Message)这个词，来看看队列(Queue)，队列是一种<strong>先进先出</strong>的数据结构。</p>
+<img src= "/xiasy1.github.io/img/loading.gif" data-src="https://gitee.com/xasier/blog-images/raw/master/MQ/queue.png">
+
+<p>消息队列（Message Queue）是一种应用间的通信方式，消息发送后可以立即返回，由消息系统来确保消息的可靠传递。消息发布者只管把消息发布到 MQ 中而不用管谁来取，消息使用者只管从 MQ 中取消息而不管是谁发布的。这样发布者和使用者都不用知道对方的存在。</p>
+<p>所以消息队列主要是实现<strong>把要传输的数据放在队列中</strong>。</p>
+<h2 id="用了消息队列有什么好处"><a href="#用了消息队列有什么好处" class="headerlink" title="用了消息队列有什么好处"></a>用了消息队列有什么好处</h2><h3 id="1-解耦"><a href="#1-解耦" class="headerlink" title="1.解耦"></a>1.解耦</h3><p>现在我有一个系统A，系统A可以产生一个<code>userId</code></p>
+<p>然后，现在有系统B和系统C都需要这个<code>userId</code>去做相关的操作</p>
+<p>某一天，系统B的负责人告诉系统A的负责人，现在系统B的<code>SystemBNeed2do(String userId)</code>这个接口不再使用了，<strong>让系统A别去调它了</strong>。</p>
+<p>于是，系统A的负责人说”好的，那我就不调用你了。”，于是就<strong>把调用系统B接口的代码给删掉了</strong>：</p>
+<img src= "/xiasy1.github.io/img/loading.gif" data-src="https://gitee.com/xasier/blog-images/raw/master/MQ/system03.jpg">
+
+<p>又过了几天，系统D的负责人接了个需求，也需要用到系统A的userId，于是就跑去跟系统A的负责人说：”老哥，我要用到你的userId，你调一下我的接口吧”</p>
+<p>于是系统A说：”没问题的，这就搞”</p>
+<p>时间飞逝：</p>
+<ul>
+<li>又过了几天，系统E的负责人过来了，告诉系统A，需要userId。</li>
+<li>又过了几天，系统B的负责人过来了，告诉系统A，还是重新掉那个接口吧。</li>
+<li>又过了几天，系统F的负责人过来了，告诉系统A，需要userId。</li>
+<li>……</li>
+</ul>
+<p>于是系统A的负责人，每天都被这给骚扰着，改来改去，改来改去…….</p>
+<p>还有另外一个问题，调用系统C的时候，如果系统C挂了，系统A还得想办法处理。如果调用系统D时，由于网络延迟，请求超时了，那系统A是反馈<code>fail</code>还是重试？？</p>
+<p>最后，系统A的负责人，觉得隔一段时间就改来改去，没意思，于是就跑路了。</p>
+<p>解决方案：<strong>将系统A的userId写到消息队列中，这样系统A就不用经常改动了</strong>。</p>
+<img src= "/xiasy1.github.io/img/loading.gif" data-src="https://gitee.com/xasier/blog-images/raw/master/MQ/system02.jpg">
+
+<p>系统A将userId写到消息队列中，系统C和系统D从消息队列中拿数据。<strong>这样有什么好处</strong>？</p>
+<ul>
+<li><p>系统A<strong>只负责</strong>把数据写到队列中，谁想要或不想要这个数据(消息)，<strong>系统A一点都不关心</strong>。</p>
+<p>即便现在系统D不想要userId这个数据了，系统B又突然想要userId这个数据了，都跟系统A无关，系统A一点代码都不用改。</p>
+</li>
+<li><p>系统D拿userId不再经过系统A，而是从消息队列里边拿。<strong>系统D即便挂了或者请求超时，都跟系统A无关，只跟消息队列有关</strong>。</p>
+</li>
+</ul>
+<p>这样一来，系统A与系统B、C、D都<strong>解耦</strong>了。</p>
+<h3 id="2-异步"><a href="#2-异步" class="headerlink" title="2.异步"></a>2.异步</h3><p>再来看看下面这种情况：系统A还是<strong>直接调用</strong>系统B、C、D</p>
+<img src= "/xiasy1.github.io/img/loading.gif" data-src="https://gitee.com/xasier/blog-images/raw/master/MQ/system01.jpg">
+
+<p><strong>假设</strong>系统A运算出userId具体的值需要50ms，调用系统B的接口需要300ms，调用系统C的接口需要300ms，调用系统D的接口需要300ms。那么这次请求就需要<code>50+300+300+300=950ms</code></p>
+<p>并且我们得知，系统A做的是<strong>主要的业务</strong>，而系统B、C、D是<strong>非主要</strong>的业务。比如系统A处理的是<strong>订单下单</strong>，而系统B是订单下单成功了，那发送一条短信告诉具体的用户此订单已成功，而系统C和系统D也是处理一些小事而已。</p>
+<p>那么此时，为了<strong>提高用户体验和吞吐量</strong>，其实可以<strong>异步地</strong>调用系统B、C、D的接口。所以，我们可以弄成是这样的：</p>
+<img src= "/xiasy1.github.io/img/loading.gif" data-src="https://gitee.com/xasier/blog-images/raw/master/MQ/system04.jpg">
+
+<p>系统A执行完了以后，将userId写到消息队列中，然后就直接返回了(至于其他的操作，则异步处理)。</p>
+<ul>
+<li>本来整个请求需要用950ms(同步)</li>
+<li>现在将调用其他系统接口异步化，只需要100ms(异步)</li>
+</ul>
+<h3 id="3-削峰-限流"><a href="#3-削峰-限流" class="headerlink" title="3.削峰/限流"></a>3.削峰/限流</h3><p>再来一个场景：现在我们每个月要搞一次大促，大促期间的并发可能会很高的，比如每秒3000个请求。假设我们现在有两台机器处理请求，并且每台机器只能每次处理1000个请求。</p>
+<img src= "/xiasy1.github.io/img/loading.gif" data-src="https://gitee.com/xasier/blog-images/raw/master/MQ/system05.jpg">
+
+
+
+<p>那多出来的1000个请求，可能就把整个系统给搞崩了…所以，有一种办法，我们可以写到消息队列中：</p>
+<img src= "/xiasy1.github.io/img/loading.gif" data-src="https://gitee.com/xasier/blog-images/raw/master/MQ/system06.jpg">
+
+<p>系统B和系统C<strong>根据自己的能够处理的请求数去消息队列中拿数据</strong>，这样即便有每秒有8000个请求，那只是把请求放在消息队列中，去拿消息队列的消息<strong>由系统自己去控制</strong>，这样就不会把整个系统给搞崩。</p>
+<h2 id="使用消息队列有什么问题"><a href="#使用消息队列有什么问题" class="headerlink" title="使用消息队列有什么问题"></a>使用消息队列有什么问题</h2><h3 id="1-高可用"><a href="#1-高可用" class="headerlink" title="1.高可用"></a>1.高可用</h3><p>无论是我们使用消息队列来做解耦、异步还是削峰，消息队列<strong>肯定不能是单机</strong>的。试着想一下，如果是单机的消息队列，万一这台机器挂了，那我们整个系统几乎就是不可用了。</p>
+<img src= "/xiasy1.github.io/img/loading.gif" data-src="https://gitee.com/xasier/blog-images/raw/master/MQ/system07.jpg">
+
+<p>所以，当项目中使用消息队列，都是得<code>集群/分布式</code>的。要做<code>集群/分布式</code>就必然希望该消息队列能够提供<strong>现成</strong>的支持，而不是自己写代码手动去实现。</p>
+<h3 id="2-数据丢失问题"><a href="#2-数据丢失问题" class="headerlink" title="2.数据丢失问题"></a>2.数据丢失问题</h3><p>我们将数据写到消息队列上，系统B和C还没来得及取消息队列的数据，就挂掉了。<strong>如果没有做任何的措施，我们的数据就丢了</strong>。</p>
+<img src= "/xiasy1.github.io/img/loading.gif" data-src="https://gitee.com/xasier/blog-images/raw/master/MQ/system08.jpg">
+
+<p>Redis可以将数据持久化磁盘上，万一Redis挂了，还能从磁盘从将数据恢复过来。同样地，消息队列中的数据也需要存在别的地方，这样才尽可能减少数据的丢失。</p>
+<p>那存在哪呢？</p>
+<ul>
+<li>磁盘？</li>
+<li>数据库？</li>
+<li>Redis？</li>
+<li>分布式文件系统？</li>
+</ul>
+<p>同步存储还是异步存储？</p>
+<h3 id="3-其他"><a href="#3-其他" class="headerlink" title="3.其他"></a>3.其他</h3><p>除了这些，我们在<strong>使用的时候</strong>还得考虑各种的问题：</p>
+<ul>
+<li>消息重复消费了怎么办啊？</li>
+<li>我想保证消息是<strong>绝对</strong>有顺序的怎么做？</li>
+<li>……..</li>
+</ul>
+<p>虽然消息队列给我们带来了那么多的好处，但同时我们发现引入消息队列也会<strong>提高系统的复杂性</strong>。市面上现在已经有不少消息队列轮子了，每种消息队列都有自己的特点，<strong>选取哪种MQ还得好好斟酌</strong>。</p>
+<h2 id="消息队列的类型介绍"><a href="#消息队列的类型介绍" class="headerlink" title="消息队列的类型介绍"></a>消息队列的类型介绍</h2><ul>
+<li><p><strong>Kafka</strong>：是由 Apache 软件基金会开发的一个开源流处理平台，由 Scala 和 Java 编写，是一种高吞吐量的分布式发布订阅消息系统，支持单机每秒百万并发。另外，Kafka 的定位主要在日志等方面， 因为Kafka 设计的初衷就是<code>处理日志</code>的，可以看做是一个<code>日志（消息）系统</code>一个重要组件，针对性很强。0.8 版本开始支持复制，不支持事物，因此对消息的重复、丢失、错误没有严格的要求。</p>
+</li>
+<li><p><strong>RocketMQ</strong>：阿里开源的消息中间件，是一款低延迟、高可靠、可伸缩、易于使用的消息中间件，思路起源于 Kafka。最大的问题商业版收费，有些功能不开放。</p>
+</li>
+<li><p><strong>RabbitMQ</strong>：由 Erlang（有着和原生 Socket 一样低的延迟）语言开发基于 AMQP 协议的开源消息队列系统。能保证消息的可靠性、稳定性、安全性。<code>高并发</code>的特性，毋庸置疑，RabbitMQ 最高，原因是它的实现语言是天生具备高并发高可用的erlang 语言，天生的<code>分布式</code>优势。</p>
+</li>
+</ul>
+<h2 id="RabbitMQ基本概念"><a href="#RabbitMQ基本概念" class="headerlink" title="RabbitMQ基本概念"></a>RabbitMQ基本概念</h2><img src= "/xiasy1.github.io/img/loading.gif" data-src="https://gitee.com/xasier/blog-images/raw/master/MQ/RabbitMQ.jpeg">
+
+<ol>
+<li>Message 消息，消息是不具名的，它由消息头和消息体组成。消息体是不透明的，而消息头则由一系列的可选属性组成，这些属性包括routing-key（路由键）、priority（相对于其他消息的优先权）、delivery-mode（指出该消息可能需要持久性存储）等。</li>
+<li>Publisher 消息的生产者，也是一个向交换器发布消息的客户端应用程序。</li>
+<li>Exchange 交换器，用来接收生产者发送的消息并将这些消息路由给服务器中的队列。</li>
+<li>Binding 绑定，用于消息队列和交换器之间的关联。一个绑定就是基于路由键将交换器和消息队列连接起来的路由规则，所以可以将交换器理解成一个由绑定构成的路由表。</li>
+<li>Queue 消息队列，用来保存消息直到发送给消费者。它是消息的容器，也是消息的终点。一个消息可投入一个或多个队列。消息一直在队列里面，等待消费者连接到这个队列将其取走。</li>
+<li>Connection 网络连接，比如一个TCP连接。</li>
+<li>Channel 信道，多路复用连接中的一条独立的双向数据流通道。信道是建立在真实的TCP连接内地虚拟连接，AMQP 命令都是通过信道发出去的，不管是发布消息、订阅队列还是接收消息，这些动作都是通过信道完成。因为对于操作系统来说建立和销毁 TCP 都是非常昂贵的开销，所以引入了信道的概念，以复用一条 TCP 连接。</li>
+<li>Consumer 消息的消费者，表示一个从消息队列中取得消息的客户端应用程序。</li>
+<li>Virtual Host 虚拟主机，表示一批交换器、消息队列和相关对象。虚拟主机是共享相同的身份认证和加密环境的独立服务器域。每个 vhost 本质上就是一个 mini 版的 RabbitMQ 服务器，拥有自己的队列、交换器、绑定和权限机制。vhost 是 AMQP 概念的基础，必须在连接时指定，RabbitMQ 默认的 vhost 是 / 。</li>
+<li>Broker 表示消息队列服务器实体。</li>
+</ol>
+<h2 id="消息队列在node-js中的简单应用"><a href="#消息队列在node-js中的简单应用" class="headerlink" title="消息队列在node.js中的简单应用"></a>消息队列在node.js中的简单应用</h2><h3 id="使用amqplib模块"><a href="#使用amqplib模块" class="headerlink" title="使用amqplib模块"></a>使用amqplib模块</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install amqplib</span><br></pre></td></tr></table></figure>
+
+<h3 id="生产者代码product-js"><a href="#生产者代码product-js" class="headerlink" title="生产者代码product.js"></a>生产者代码product.js</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> amqp =<span class="built_in">require</span>(<span class="string">'amqplib'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span>  <span class="title">product</span>(<span class="params">params</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 1.创建链接对象</span></span><br><span class="line">    <span class="keyword">const</span> connect =<span class="keyword">await</span> amqp.connect(<span class="string">'amqp://localhost:5672'</span>);</span><br><span class="line">     <span class="comment">// 1. 创建链接对象</span></span><br><span class="line">     <span class="keyword">const</span> connection = <span class="keyword">await</span> amqp.connect(<span class="string">'amqp://localhost:5672'</span>);</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 2. 获取通道</span></span><br><span class="line">     <span class="keyword">const</span> channel = <span class="keyword">await</span> connection.createChannel();</span><br><span class="line"> </span><br><span class="line">     <span class="comment">// 3. 声明参数</span></span><br><span class="line">     <span class="keyword">const</span> routingKey = <span class="string">'helloKoalaQueue'</span>;</span><br><span class="line">     <span class="keyword">const</span> msg = <span class="string">'hello koala'</span>;</span><br><span class="line"> </span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">10000</span>; i++) &#123;</span><br><span class="line">         <span class="comment">// 4. 发送消息</span></span><br><span class="line">         <span class="keyword">await</span> channel.publish(<span class="string">''</span>, routingKey, Buffer.from(<span class="string">`<span class="subst">$&#123;msg&#125;</span> 第<span class="subst">$&#123;i&#125;</span>条消息`</span>));</span><br><span class="line">     &#125;</span><br><span class="line"> </span><br><span class="line">     <span class="comment">// 5. 关闭通道</span></span><br><span class="line">     <span class="keyword">await</span> channel.close();</span><br><span class="line">     <span class="comment">// 6. 关闭连接</span></span><br><span class="line">     <span class="keyword">await</span> connect.close();</span><br><span class="line">&#125;</span><br><span class="line">product();</span><br></pre></td></tr></table></figure>
+
+<p><strong>疑问1</strong></p>
+<p>前面提到过交换机这个名词，<code>生产者</code>发消息的时候必须要指定一个 exchange，若不指定 exchange（为空）会默认指向 AMQP default 交换机，AMQP default 路由规则是根据 routingKey 和 mq 上有没有相同名字的队列进行匹配路由。上面这段代码就是默认指定的交换机。不同类型交换机详细讲解请往下看。</p>
+<p><strong>疑问2</strong></p>
+<p>生产者发送消息后，消息是发送到交换机exchange，但是这时候会创建队列吗？</p>
+<p>答案：代码中我们声明的是路由是routingKey，但是它并没有创建helloKoalaQueue 消息队列，消息只会发送到交exchange交换机。 运行代码后看队列截图可以证明这一点:</p>
+<p><strong>说明1</strong></p>
+<p>生产者发送消息后，注意关闭通道和连接，只要消息发送成功后，连接就可以关闭了，消费者用任何语言去获取消息都可以，这也证明了消息队列优秀<code>解耦</code>的特性</p>
+<p><strong>说明2</strong></p>
+<p>可以多次执行<code>node product.js</code>生产者代码,消息会堆积到<code>交换机exchange</code>中，并不会覆盖，如果已执行过消费者并且确认了对应的<code>消息队列</code>，消息会从<code>exchange交换机</code>发送到<code>消息队列</code>，并存入到<code>消息队列</code>，等待<code>消费者</code>消费</p>
+<h3 id="消费者代码consumer-js"><a href="#消费者代码consumer-js" class="headerlink" title="消费者代码consumer.js"></a>消费者代码consumer.js</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 构建消费者</span></span><br><span class="line"><span class="keyword">const</span> amqp = <span class="built_in">require</span>(<span class="string">'amqplib'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">consumer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 1. 创建链接对象</span></span><br><span class="line">    <span class="keyword">const</span> connection = <span class="keyword">await</span> amqp.connect(<span class="string">'amqp://localhost:5672'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 获取通道</span></span><br><span class="line">    <span class="keyword">const</span> channel = <span class="keyword">await</span> connection.createChannel();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 声明参数</span></span><br><span class="line">    <span class="keyword">const</span> queueName = <span class="string">'helloKoalaQueue'</span>;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 4. 声明队列，交换机默认为 AMQP default</span></span><br><span class="line">    <span class="keyword">await</span> channel.assertQueue(queueName);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 5. 消费</span></span><br><span class="line">    <span class="keyword">await</span> channel.consume(queueName, msg =&gt; &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Consumer：'</span>, msg.content.toString());</span><br><span class="line">        channel.ack(msg);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">consumer();</span><br></pre></td></tr></table></figure>
+
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Shinex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xiasy1.gitub.io/posts/message_queue/">https://xiasy1.gitub.io/posts/message_queue/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xiasy1.gitub.io" target="_blank">圣逸の博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/xiasy1.github.io/tags/%E6%9E%B6%E6%9E%84/">架构</a></div><div class="post_share"><div class="social-share" data-image="/xiasy1.github.io/img/mq.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/xiasy1.github.io/posts/node/node02/"><img class="next-cover" data-src="/xiasy1.github.io/img/strapi.png" onerror="onerror=null;src='/xiasy1.github.io/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Node.js ☞☞ 【基于strapi的内容管理器使用篇】</div></div></a></div></nav><hr><div id="post-comment"><div class="comment-head"><div class="comment-headling"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"><span class="slider"></span></label><span class="second-comment">Gitalk</span></div></div><div class="comment-wrap"><div class="comments-items-1" data-name="Valine"><div class="vcomment" id="vcomment"></div><script>function loadvaline () {  
+  var requestSetting = function (from,set) {
+    var from = from
+    var setting = set.split(',').filter(function(item){
+    return from.indexOf(item) > -1
+    });
+    setting = setting.length == 0 ? from :setting;
+    return setting
+  }
+
+  var guestInfo = requestSetting(['nick','mail','link'],'nick,mail,link')
+  var requiredFields = requestSetting(['nick','mail'],'nick,mail')
+
+  function initValine () {
+    window.valine = new Valine({
+      el:'#vcomment',
+      appId: '7XBOk1NFgzXrgIGbdDrPmHyh-gzGzoHsz',
+      appKey: 'f4pCnWPOMzJlkDWw6Idr46cR',
+      placeholder: '留下你的足迹吧，邮箱必填哦~',
+      avatar: 'monsterid',
+      meta: guestInfo,
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      requiredFields: requiredFields
+    });
+  }
+  loadScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || false) {
+  window.addEventListener('load', loadvaline)
+}
+else {
+  function loadOtherComment () {
+    loadvaline()
+  }
+}</script></div><div class="comments-items-2" data-name="Gitalk"><div id="gitalk-container"></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5/js/md5.min.js"></script><script>function loadGitalk () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+
+  loadScript('https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js', function () {
+    var gitalk = new Gitalk({
+      clientID: '4f1050ca77c3a6ebb3b5',
+      clientSecret: '5465aa18fe87a0d9e9f37e5eae7090c14da49c0a',
+      repo: 'xasier-blog-coment',
+      owner: 'xiasy1',
+      admin: ['xiasy1'],
+      id: md5(decodeURI(location.pathname)),
+      language: 'zh-CN',
+      perPage: 10,
+      distractionFreeMode: false,
+      pagerDirection: 'last',
+      createIssueManually: false,
+      updateCountCallback: commentCount
+    })
+    gitalk.render('gitalk-container')
+  })
+
+  function commentCount(n){
+    try {
+      document.getElementsByClassName('gitalk-comment-count')[0].innerHTML= n
+    } catch (e) {
+      return false
+    }
+  }
+}
+
+if ('Valine' === 'Gitalk' || false) {
+  window.addEventListener('load', loadGitalk)
+}
+else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022  <i id="heartbeat" class="fa fas fa-heartbeat"></i> Shinex</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div><head><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/HCLonely/images@master/others/heartbeat.min.css"><meta name="generator" content="Hexo 4.2.0"></head></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><script src="/xiasy1.github.io/js/utils.js"></script><script src="/xiasy1.github.io/js/main.js"></script><script src="/xiasy1.github.io/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script src="/xiasy1.github.io/js/third-party/ClickShowText.js"></script><script src="/xasier/js/calendar.js"></script><script src="/xasier/js/languages.js"></script><script src="/xiasy1.github.io/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/xiasy1.github.io/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":120,"height":260},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>

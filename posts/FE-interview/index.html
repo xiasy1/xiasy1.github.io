@@ -1,0 +1,486 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FE-interview | 圣逸の博客</title><meta name="description" content="HTML和H5相关你用过哪些HTML5标签？ 用于绘画的 canvas 元素 用于媒介回放的 video 和 audio 元素对本地离线存储的更好的支持 新的特殊内容元素，比如 article（独立内容）、footer（页脚）、header（页眉）、nav（导航）、section（区段） 新的表单控件，比如 calendar、date、time、email、url、search  简述一下你对HT"><meta name="keywords" content="FE-interview"><meta name="author" content="Shinex"><meta name="copyright" content="Shinex"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/xiasy1.github.io/img/favicon.jpg"><link rel="canonical" href="https://xiasy1.gitub.io/posts/FE-interview/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta property="og:type" content="article"><meta property="og:title" content="FE-interview"><meta property="og:url" content="https://xiasy1.gitub.io/posts/FE-interview/"><meta property="og:site_name" content="圣逸の博客"><meta property="og:description" content="HTML和H5相关你用过哪些HTML5标签？ 用于绘画的 canvas 元素 用于媒介回放的 video 和 audio 元素对本地离线存储的更好的支持 新的特殊内容元素，比如 article（独立内容）、footer（页脚）、header（页眉）、nav（导航）、section（区段） 新的表单控件，比如 calendar、date、time、email、url、search  简述一下你对HT"><meta property="og:image" content="https://xiasy1.gitub.io/img/FE-interview.jpeg"><meta property="article:published_time" content="2021-12-27T04:03:58.594Z"><meta property="article:modified_time" content="2021-12-27T04:03:58.594Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/xiasy1.github.io/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><link rel="prev" title="5 个可以加速开发的 VueUse 库函数" href="https://xiasy1.gitub.io/posts/VueUse/"><link rel="next" title="LeetCode数据结构与算法--过关斩将（持续更新...）" href="https://xiasy1.gitub.io/posts/leetcode01/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/xiasy1.github.io/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: {"text":"I,LOVE,YOU","fontSize":"15px"},
+  medium_zoom: true,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: true,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-12-27 12:03:58'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/xiasy1.github.io/img/favicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/xiasy1.github.io/archives/"><div class="headline">文章</div><div class="length_num">23</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/xiasy1.github.io/tags/"><div class="headline">标签</div><div class="length_num">14</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/xiasy1.github.io/categories/"><div class="headline">分类</div><div class="length_num">13</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/xiasy1.github.io/bangumis/"><i class="fa-fw fab fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page" href="/xiasy1.github.io/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li><li><a class="site-page" href="/xiasy1.github.io/books/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li><li><a class="site-page" href="/xiasy1.github.io/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/xiasy1.github.io/gallery/"><i class="fa-fw far fa-image"></i><span> 相册</span></a></li><li><a class="site-page" href="/xiasy1.github.io/home/"><i class="fa-fw fab fa-phoenix-framework"></i><span> 主页</span></a></li><li><a class="site-page" href="/xiasy1.github.io/box/"><i class="fa-fw fab fa-xbox"></i><span> 聚宝盒</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/contact/"><i class="fa-fw far fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page"><span> 关于</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/xiasy1.github.io/about/"><i class="fa-fw fa fa-heart"></i><span> 关于我</span></a></li><li><a class="site-page" href="https://console.leancloud.cn/" target="_blank" rel="noopener"><i class="fa-fw fa fa-link"></i><span> Valine评论后台</span></a></li></ul></div></div></div></div><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML和H5相关"><span class="toc-number">1.</span> <span class="toc-text">HTML和H5相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#你用过哪些HTML5标签？"><span class="toc-number">1.1.</span> <span class="toc-text">你用过哪些HTML5标签？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简述一下你对HTML-语义化的理解？"><span class="toc-number">1.2.</span> <span class="toc-text">简述一下你对HTML 语义化的理解？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用一个-div-模拟-textarea-的实现？"><span class="toc-number">1.3.</span> <span class="toc-text">用一个 div 模拟 textarea 的实现？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面导入样式时，使用link-和-import-有什么区别？"><span class="toc-number">1.4.</span> <span class="toc-text">页面导入样式时，使用link 和 @import 有什么区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用HTML-知识解决seo-优化问题"><span class="toc-number">1.5.</span> <span class="toc-text">用HTML 知识解决seo 优化问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cookies-sessionStorage-和-localStorage-的区别？"><span class="toc-number">1.6.</span> <span class="toc-text">cookies, sessionStorage 和 localStorage 的区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iframe框架有哪些优缺点？"><span class="toc-number">1.7.</span> <span class="toc-text">iframe框架有哪些优缺点？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#怎么给cookie设置过去时间，关闭页面后和浏览器后cookie还在吗？"><span class="toc-number">1.8.</span> <span class="toc-text">怎么给cookie设置过去时间，关闭页面后和浏览器后cookie还在吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#local-storage一般用来干什么"><span class="toc-number">1.9.</span> <span class="toc-text">local storage一般用来干什么</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS相关"><span class="toc-number">2.</span> <span class="toc-text">CSS相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#rem原理"><span class="toc-number">2.1.</span> <span class="toc-text">rem原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何实现让-div-垂直居中，左右-10px，高度始终为宽度一半？"><span class="toc-number">2.2.</span> <span class="toc-text">如何实现让 div 垂直居中，左右 10px，高度始终为宽度一半？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript相关"><span class="toc-number">3.</span> <span class="toc-text">JavaScript相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#箭头函数与普通函数的区别"><span class="toc-number">3.1.</span> <span class="toc-text">箭头函数与普通函数的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#instanceof-能否判断基本数据类型？"><span class="toc-number">3.2.</span> <span class="toc-text">instanceof 能否判断基本数据类型？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-all和-race区别"><span class="toc-number">3.3.</span> <span class="toc-text">Promise.all和.race区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue相关"><span class="toc-number">4.</span> <span class="toc-text">Vue相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#你能讲一讲-MVVM-吗？"><span class="toc-number">4.1.</span> <span class="toc-text">你能讲一讲 MVVM 吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单说一下-Vue2-x-响应式数据原理"><span class="toc-number">4.2.</span> <span class="toc-text">简单说一下 Vue2.x 响应式数据原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#你知道-Vue3-x-响应式数据原理吗？"><span class="toc-number">4.3.</span> <span class="toc-text">你知道 Vue3.x 响应式数据原理吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#再说一下-vue2-x-中如何监测数组变化"><span class="toc-number">4.4.</span> <span class="toc-text">再说一下 vue2.x 中如何监测数组变化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nextTick-知道吗，实现原理是什么？"><span class="toc-number">4.5.</span> <span class="toc-text">nextTick 知道吗，实现原理是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#说一下-Vue-的生命周期"><span class="toc-number">4.6.</span> <span class="toc-text">说一下 Vue 的生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#你的接口请求一般放在哪个生命周期中？"><span class="toc-number">4.7.</span> <span class="toc-text">你的接口请求一般放在哪个生命周期中？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#再说一下-Computed-和-Watch"><span class="toc-number">4.8.</span> <span class="toc-text">再说一下 Computed 和 Watch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#说一下-v-if-和-v-show-的区别"><span class="toc-number">4.9.</span> <span class="toc-text">说一下 v-if 和 v-show 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组件中的-data-为什么是一个函数？"><span class="toc-number">4.10.</span> <span class="toc-text">组件中的 data 为什么是一个函数？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#说一下-v-model-的原理"><span class="toc-number">4.11.</span> <span class="toc-text">说一下 v-model 的原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-事件绑定原理说一下"><span class="toc-number">4.12.</span> <span class="toc-text">Vue 事件绑定原理说一下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-模版编译原理知道吗，能简单说一下吗？"><span class="toc-number">4.13.</span> <span class="toc-text">Vue 模版编译原理知道吗，能简单说一下吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue2-x-和-Vue3-x-渲染器的-diff-算法分别说一下"><span class="toc-number">4.14.</span> <span class="toc-text">Vue2.x 和 Vue3.x 渲染器的 diff 算法分别说一下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#再说一下虚拟-Dom-以及-key-属性的作用"><span class="toc-number">4.15.</span> <span class="toc-text">再说一下虚拟 Dom 以及 key 属性的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#keep-alive-了解吗？"><span class="toc-number">4.16.</span> <span class="toc-text">keep-alive 了解吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-中组件生命周期调用顺序说一下"><span class="toc-number">4.17.</span> <span class="toc-text">Vue 中组件生命周期调用顺序说一下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue2-x-组件通信有哪些方式？"><span class="toc-number">4.18.</span> <span class="toc-text">Vue2.x 组件通信有哪些方式？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSR-了解吗？有什么好处？"><span class="toc-number">4.19.</span> <span class="toc-text">SSR 了解吗？有什么好处？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#你都做过哪些-Vue-的性能优化？"><span class="toc-number">4.20.</span> <span class="toc-text">你都做过哪些 Vue 的性能优化？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hash-路由和-history-路由实现原理说一下"><span class="toc-number">4.21.</span> <span class="toc-text">hash 路由和 history 路由实现原理说一下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-Router导航守卫知道吗"><span class="toc-number">4.22.</span> <span class="toc-text">Vue-Router导航守卫知道吗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-Router完整的导航解析流程"><span class="toc-number">4.23.</span> <span class="toc-text">Vue-Router完整的导航解析流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vue怎么制作自定义指令？自定义指令中获取到的el是dom渲染前还是渲染后？"><span class="toc-number">4.24.</span> <span class="toc-text">vue怎么制作自定义指令？自定义指令中获取到的el是dom渲染前还是渲染后？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用vue做权限管理怎么做？"><span class="toc-number">4.25.</span> <span class="toc-text">用vue做权限管理怎么做？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#webpack怎么压缩代码"><span class="toc-number">4.26.</span> <span class="toc-text">webpack怎么压缩代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git相关"><span class="toc-number">5.</span> <span class="toc-text">Git相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用git指令，怎么回滚代码？怎么删除特定提交。"><span class="toc-number">5.1.</span> <span class="toc-text">常用git指令，怎么回滚代码？怎么删除特定提交。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络请求相关"><span class="toc-number">6.</span> <span class="toc-text">网络请求相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在浏览器打开一个url显示白屏，如何排查问题"><span class="toc-number">6.1.</span> <span class="toc-text">在浏览器打开一个url显示白屏，如何排查问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常规的网络攻击方式有哪些？分别怎么防范？"><span class="toc-number">6.2.</span> <span class="toc-text">常规的网络攻击方式有哪些？分别怎么防范？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从-URL-输入到页面展现到底发生什么？-参考链接"><span class="toc-number">6.3.</span> <span class="toc-text">从 URL 输入到页面展现到底发生什么？ 参考链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是跨域？跨域请求资源的方法有那些？"><span class="toc-number">6.4.</span> <span class="toc-text">什么是跨域？跨域请求资源的方法有那些？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开发过程中遇到的内存泄露情况，如何解决的？"><span class="toc-number">6.5.</span> <span class="toc-text">开发过程中遇到的内存泄露情况，如何解决的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请求方式以及get和post请求在缓存方面的区别"><span class="toc-number">6.6.</span> <span class="toc-text">请求方式以及get和post请求在缓存方面的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手撕篇章"><span class="toc-number">7.</span> <span class="toc-text">手撕篇章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原生ajax请求"><span class="toc-number">7.1.</span> <span class="toc-text">原生ajax请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#axios怎么实现拦截器"><span class="toc-number">7.2.</span> <span class="toc-text">axios怎么实现拦截器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防抖节流"><span class="toc-number">7.3.</span> <span class="toc-text">防抖节流</span></a></li></ol></li></ol></div></div></div><div id="body-wrap"><div id="web_bg" data-type="photo"></div><header class="post-bg" id="page-header" style="background-image: url(/xiasy1.github.io/img/FE-interview.jpeg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/xiasy1.github.io/">圣逸の博客</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/xiasy1.github.io/bangumis/"><i class="fa-fw fab fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page" href="/xiasy1.github.io/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li><li><a class="site-page" href="/xiasy1.github.io/books/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li><li><a class="site-page" href="/xiasy1.github.io/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/xiasy1.github.io/gallery/"><i class="fa-fw far fa-image"></i><span> 相册</span></a></li><li><a class="site-page" href="/xiasy1.github.io/home/"><i class="fa-fw fab fa-phoenix-framework"></i><span> 主页</span></a></li><li><a class="site-page" href="/xiasy1.github.io/box/"><i class="fa-fw fab fa-xbox"></i><span> 聚宝盒</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/contact/"><i class="fa-fw far fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/xiasy1.github.io/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page"><span> 关于</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/xiasy1.github.io/about/"><i class="fa-fw fa fa-heart"></i><span> 关于我</span></a></li><li><a class="site-page" href="https://console.leancloud.cn/" target="_blank" rel="noopener"><i class="fa-fw fa fa-link"></i><span> Valine评论后台</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">FE-interview</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2021-12-27 12:03:58"><i class="far fa-calendar-alt fa-fw"></i> 发表于 2021-12-27</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2021-12-27 12:03:58"><i class="fas fa-history fa-fw"></i> 更新于 2021-12-27</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fas fa-inbox fa-fw post-meta__icon"></i><a class="post-meta__categories" href="/xiasy1.github.io/categories/FE-interview/">FE-interview</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta__icon"></i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span><span class="post-meta__separator">|</span><i class="far fa-comments fa-fw post-meta__icon"></i><span>评论数:</span><a href="/xiasy1.github.io/posts/FE-interview/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count comment-count" data-xid="/xiasy1.github.io/posts/FE-interview/" itemprop="commentCount"></span></a></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="HTML和H5相关"><a href="#HTML和H5相关" class="headerlink" title="HTML和H5相关"></a>HTML和H5相关</h2><h3 id="你用过哪些HTML5标签？"><a href="#你用过哪些HTML5标签？" class="headerlink" title="你用过哪些HTML5标签？"></a>你用过哪些HTML5标签？</h3><ul>
+<li>用于绘画的 canvas 元素</li>
+<li>用于媒介回放的 video 和 audio 元素对本地离线存储的更好的支持</li>
+<li>新的特殊内容元素，比如 article（独立内容）、footer（页脚）、header（页眉）、nav（导航）、section（区段）</li>
+<li>新的表单控件，比如 calendar、date、time、email、url、search</li>
+</ul>
+<h3 id="简述一下你对HTML-语义化的理解？"><a href="#简述一下你对HTML-语义化的理解？" class="headerlink" title="简述一下你对HTML 语义化的理解？"></a>简述一下你对HTML 语义化的理解？</h3><ol>
+<li>去掉或丢失样式时，能够让页面呈现出清晰的结构；</li>
+<li>有利于SEO 和搜索引擎建立良好沟通；</li>
+<li>有助于爬虫抓取更多的信息，爬虫依赖于标签来确定上下文和各个关键字的权重；</li>
+<li>方便其他设备解析，便于团队开发和维护，语义化更具可读性。</li>
+</ol>
+<h3 id="用一个-div-模拟-textarea-的实现？"><a href="#用一个-div-模拟-textarea-的实现？" class="headerlink" title="用一个 div 模拟 textarea 的实现？"></a>用一个 div 模拟 textarea 的实现？</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">//主要考查contenteditable属性</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>div模拟textarea<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.editdiv</span>&#123;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">border</span><span class="selector-pseudo">:1px</span> <span class="selector-tag">solid</span> <span class="selector-tag">silver</span>;</span></span><br><span class="line">            width: 500px;</span><br><span class="line">            min-height: 200px;</span><br><span class="line">            font-size: 14px;</span><br><span class="line">            padding: 4px;</span><br><span class="line"><span class="css">            <span class="selector-tag">color</span>: <span class="selector-id">#333</span>;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">outline</span><span class="selector-pseudo">:0</span>; <span class="comment">/* 解决聚焦边框 */</span></span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="comment">/* 添加placeholder属性 */</span></span></span><br><span class="line"><span class="css">        <span class="selector-class">.editdiv</span><span class="selector-pseudo">:empty</span><span class="selector-pseudo">::before</span>&#123;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">content</span><span class="selector-pseudo">:attr(placeholder)</span>;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">color</span>: <span class="selector-id">#999</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"editdiv"</span> <span class="attr">contenteditable</span>=<span class="string">"true"</span> <span class="attr">placeholder</span>=<span class="string">"请输入内容..."</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="页面导入样式时，使用link-和-import-有什么区别？"><a href="#页面导入样式时，使用link-和-import-有什么区别？" class="headerlink" title="页面导入样式时，使用link 和 @import 有什么区别？"></a>页面导入样式时，使用link 和 @import 有什么区别？</h3><ol>
+<li>从属关系区别。@import 是CSS 提供的语法规则，只有导入样式表的作用；<br> link 是HTML 提供的标签，不仅可以加载CSS 文件，还可以定义RSS，rel 连接属性，引入网站图标等。</li>
+<li>加载顺序区别。加载页面时，<strong>link</strong> 标签引入的CSS 文件被<strong>同时加载</strong>；<br> 而<strong>@import</strong> 引入的CSS 文件在<strong>页面加载完毕</strong>后被加载。</li>
+<li>兼容性区别。@import 是CSS2.1 才有的语法，故只可在<strong>IE5+</strong> 才能识别；<br> link 标签作为HTML 标签，不存在兼容性问题。</li>
+<li>DOM 可控制区别。可以通过JS 操作DOM ，插入link 标签改变样式；<br> 由于DOM 方法是基于文档的，无法使用@import 的方法插入样式。</li>
+</ol>
+<h3 id="用HTML-知识解决seo-优化问题"><a href="#用HTML-知识解决seo-优化问题" class="headerlink" title="用HTML 知识解决seo 优化问题"></a>用HTML 知识解决seo 优化问题</h3><p>网站上线应该设置TDK</p>
+<ol>
+<li><p>其中”T”代表页头中的title元素，这里可能还要利用到分词技术；<br> 当标题(Title)写好后，我们就尽可能不要再去修改了，尽量简洁；<br> 没意义的词尽量不要加入到标题中，避免干扰到搜索引擎识别网站主题（标题在三十个字以内）。</p>
+</li>
+<li><p>其中”D”代表页头中的description元素，要知道描述是对网页的一个概述；<br> 也是对title的补充，因为title中只能书写有限的字数，所以在description中就要稍微详细的补充起来；<br> 一般用一句两句话概括文章的内容，内容要精简,但是次数不要超过4 次，3次最佳，一定要自然。</p>
+</li>
+<li><p>其中”K”代表页头中的keywords元素，提取页面中的主要关键词；<br> 数量控制在三到六个内。想方设法让主关键字都出现。<br> 标题、描述、关键词在seo界也被称为三个标签。<br> HTML 语义化标签；简洁合理，当CSS 和JS 加载不全时，使我们HTML 文档尽量清晰展示，不会特别乱。</p>
+</li>
+</ol>
+<h3 id="cookies-sessionStorage-和-localStorage-的区别？"><a href="#cookies-sessionStorage-和-localStorage-的区别？" class="headerlink" title="cookies, sessionStorage 和 localStorage 的区别？"></a>cookies, sessionStorage 和 localStorage 的区别？</h3><p>存储大小限制；数据有效期不同；作用域不同。</p>
+<ol>
+<li><strong>cookies</strong> 是为了标识用户身份而存储在用户本地终端上的数据；<br> 始终在同源http 请求中携带，即cookies 在浏览器和服务器间来回传递；<br> 而<strong>sessionStorage</strong> 和<strong>localStorage</strong> 不会自动把数据发给服务器，仅在本地保存。</li>
+<li><strong>cookie</strong> 保存数据很小，不能超过<strong>4k</strong>;<br> <strong>sessionStorage</strong> 和<strong>localStorage</strong> 保存数据大，可达到<strong>5M</strong>。</li>
+<li>cookie 在设置的cookie 过期时间之前一直有效，即使窗口或者浏览器关闭；<br> sessionStorage 仅在浏览器窗口关闭之前有效；<br> localStorage 始终有效，窗口和浏览器关闭也一直保存，用作长久数据保存。</li>
+<li>cookie 在所有的同源窗口都是共享；<br> sessionStorage 不在不同的浏览器共享，即使统一页面；<br> localStorage 在所有同源窗口共享。</li>
+</ol>
+<h3 id="iframe框架有哪些优缺点？"><a href="#iframe框架有哪些优缺点？" class="headerlink" title="iframe框架有哪些优缺点？"></a>iframe框架有哪些优缺点？</h3><p>优点：</p>
+<ol>
+<li>iframe 能够原封不动的把嵌入的网页展现出来；</li>
+<li>如果有多个网页引用iframe,那么你只需要修改iframe 的内容，就可以实现调用的每一个页面内容的更改;</li>
+<li>网页如果为了统一风格，头部和版本都是一样的，就可以写成一个页面，用iframe 来嵌套，可以怎加代码的可重用；</li>
+<li>如果遇到加载缓慢的第三方内容如图标和广告，这些问题可以由iframe 来解决。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>搜索引擎的爬虫程序无法解读这种页面；</li>
+<li>框架结构中出现各种滚动条；</li>
+<li>使用框架结构时，保证设置正确的导航链接。</li>
+<li>iframe 页面会增加服务器的http 请求。</li>
+</ol>
+<h3 id="怎么给cookie设置过去时间，关闭页面后和浏览器后cookie还在吗？"><a href="#怎么给cookie设置过去时间，关闭页面后和浏览器后cookie还在吗？" class="headerlink" title="怎么给cookie设置过去时间，关闭页面后和浏览器后cookie还在吗？"></a>怎么给cookie设置过去时间，关闭页面后和浏览器后cookie还在吗？</h3><p>在js中设置cookie只能通过document.cookie属性去设置，过去时间通过设置<code>expires</code>或者<code>Max-age</code>=”GMT格式时间”。如：documen.cookie=”name=xsy;expires=new Date(“2020/8/3”)”</p>
+<p>如果Cookie没有设置expires属性，那么 cookie 的生命周期只是在当前的会话中，关闭浏览器意味着这次会话的结束，此时 cookie 随之失效。</p>
+<h3 id="local-storage一般用来干什么"><a href="#local-storage一般用来干什么" class="headerlink" title="local storage一般用来干什么"></a>local storage一般用来干什么</h3><p>localStorage作为HTML5本地存储web storage特性的API之一，主要作用是将数据保存在客户端中。一般情况下是永久保存的，也就是说只要采用localstorage保存信息，数据便一直存储在用户的客户端中。即使用户关闭当前web浏览器后重新启动，数据依然存在。</p>
+<ol>
+<li><p>理论上 Cookie 无法胜任的、可以用简单的键值对来存取的数据存储任务，都可以交给 Local Storage 来做。</p>
+</li>
+<li><p>存储一些内容稳定的资源。比如图片内容丰富的电商网站会用它来存储 Base64 格式的图片字符串</p>
+</li>
+<li><p>存储一些不经常更新的 CSS、JS 等静态资源</p>
+</li>
+<li><p>也可以用来保存账号密码，也有一些离线操作的时候会用到，比如我之前做过新闻编辑上传功能，离线可以保存，有网络直接提交。</p>
+</li>
+</ol>
+<p>顺便提一下 Session Storage 的应用：比如微博就用它来存储你本次会话的浏览足迹</p>
+<h2 id="CSS相关"><a href="#CSS相关" class="headerlink" title="CSS相关"></a>CSS相关</h2><h3 id="rem原理"><a href="#rem原理" class="headerlink" title="rem原理"></a>rem原理</h3><p><strong>em</strong> 是一个布局的长度单位，当前对象内文本的字体大小的相对单位，也就是说相对于当前元素的font-size。<br><strong>rem</strong> 是（根）字体大小相对单位，也就是说跟当前元素的font-size没有关系，而是跟整个html元素的font-size有关系，默认1rem=16px。</p>
+<h3 id="如何实现让-div-垂直居中，左右-10px，高度始终为宽度一半？"><a href="#如何实现让-div-垂直居中，左右-10px，高度始终为宽度一半？" class="headerlink" title="如何实现让 div 垂直居中，左右 10px，高度始终为宽度一半？"></a>如何实现让 div 垂直居中，左右 10px，高度始终为宽度一半？</h3><h2 id="JavaScript相关"><a href="#JavaScript相关" class="headerlink" title="JavaScript相关"></a>JavaScript相关</h2><h3 id="箭头函数与普通函数的区别"><a href="#箭头函数与普通函数的区别" class="headerlink" title="箭头函数与普通函数的区别"></a>箭头函数与普通函数的区别</h3><p>1、语法更加简洁、清晰</p>
+<p>2、箭头函数不会创建自己的this</p>
+<p>3、箭头函数继承而来的this指向永远不变</p>
+<p>4、.call()/.apply()/.bind()无法改变箭头函数中this的指向</p>
+<p>5、箭头函数不能作为构造函数使用</p>
+<p>6、箭头函数没有自己的arguments</p>
+<p>7、箭头函数没有原型prototype</p>
+<p>8、箭头函数不能用作Generator函数，不能使用yeild关键字</p>
+<h3 id="instanceof-能否判断基本数据类型？"><a href="#instanceof-能否判断基本数据类型？" class="headerlink" title="instanceof 能否判断基本数据类型？"></a>instanceof 能否判断基本数据类型？</h3><p>首先，从字面意思理解，instance 实例的意思，所以 instanceof表示谁的实例，instanceof 前后两个变量分别称为A，B，执行逻辑为：A沿着proto寻找引用，B沿着proto寻找，如果找到同一个引用，则为true。</p>
+<ul>
+<li><p>如果通过 字面量 的方式创建字符串，那么无法通过 instanceof 判断某个变量是否是字符串</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">'aaaa'</span></span><br><span class="line"><span class="built_in">console</span>.log(str <span class="keyword">instanceof</span> <span class="built_in">String</span>) <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(str <span class="keyword">instanceof</span> <span class="built_in">Object</span>) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过 new 方式，是可以使用 instanceof 判断 变量是否是字符串。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str1 = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'aaa'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(str1 <span class="keyword">instanceof</span> <span class="built_in">String</span>) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(str1 <span class="keyword">instanceof</span> <span class="built_in">Object</span>) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(str1.__proto__ === <span class="built_in">String</span>.prototype) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对于引用数据类型如 对象 和 数组，无论是通过字面量的方式创建，还是 new 的方式，都是可以通过 instanceof 来判断数据类型的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name</span><br><span class="line">    <span class="keyword">this</span>.type = <span class="string">'dog'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> d1 = <span class="keyword">new</span> Dog(<span class="string">'大黄'</span>)</span><br><span class="line"><span class="keyword">let</span> d2 = &#123; <span class="attr">name</span>: <span class="string">'肉肉'</span> &#125;</span><br><span class="line"><span class="built_in">console</span>.log(d1 <span class="keyword">instanceof</span> Dog)  <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(d1 <span class="keyword">instanceof</span> <span class="built_in">Object</span>) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(d2 <span class="keyword">instanceof</span> <span class="built_in">Object</span>)  <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line"><span class="keyword">let</span> arr2 = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="string">'a'</span>, <span class="string">'b'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(arr1 <span class="keyword">instanceof</span> <span class="built_in">Array</span>) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(arr2 <span class="keyword">instanceof</span> <span class="built_in">Array</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>所以，总结一下，<strong>instanceof</strong>的作用就是检测构造函数的 prototype 和 实例的原型_proto_是否相等。一般用于判断引用数据类型。</p>
+</li>
+</ul>
+<h3 id="Promise-all和-race区别"><a href="#Promise-all和-race区别" class="headerlink" title="Promise.all和.race区别"></a>Promise.all和.race区别</h3><h2 id="Vue相关"><a href="#Vue相关" class="headerlink" title="Vue相关"></a>Vue相关</h2><h3 id="你能讲一讲-MVVM-吗？"><a href="#你能讲一讲-MVVM-吗？" class="headerlink" title="你能讲一讲 MVVM 吗？"></a><strong>你能讲一讲 MVVM 吗？</strong></h3><p>MVVM 是 Model-View-ViewModel 缩写，也就是把 MVC 中的 Controller 演变成 ViewModel。Model 层代表数据模型，View 代表 UI 组件，ViewModel 是 View 和 Model 层的桥梁，数据会绑定到 viewModel 层并自动将数据渲染到页面中，视图变化的时候会通知 viewModel 层更新数据。</p>
+<h3 id="简单说一下-Vue2-x-响应式数据原理"><a href="#简单说一下-Vue2-x-响应式数据原理" class="headerlink" title="简单说一下 Vue2.x 响应式数据原理"></a><strong>简单说一下 Vue2.x 响应式数据原理</strong></h3><p>Vue 在初始化数据时，会使用 Object.defineProperty 重新定义 data 中的所有属性，当页面使用对应属性时，首先会进行依赖收集(收集当前组件的 watcher)</p>
+<p>如果属性发生变化会通知相关依赖进行更新操作(发布订阅)。</p>
+<h3 id="你知道-Vue3-x-响应式数据原理吗？"><a href="#你知道-Vue3-x-响应式数据原理吗？" class="headerlink" title="你知道 Vue3.x 响应式数据原理吗？"></a><strong>你知道 Vue3.x 响应式数据原理吗？</strong></h3><p>Vue3.x 改用 Proxy 替代 Object.defineProperty。因为 Proxy 可以直接监听对象和数组的变化，并且有多达 13 种拦截方法。</p>
+<p>并且作为新标准将受到浏览器厂商重点持续的性能优化。</p>
+<blockquote>
+<p>“ Proxy 只会代理对象的第一层，那么 Vue3 又是怎样处理这个问题的呢？”</p>
+</blockquote>
+<p>判断当前 Reflect.get 的返回值是否为 Object，如果是则再通过 reactive 方法做代理， 这样就实现了深度观测。</p>
+<blockquote>
+<p>“ 监测数组的时候可能触发多次 get/set，那么如何防止触发多次呢？”</p>
+</blockquote>
+<p>我们可以判断 key 是否为当前被代理对象 target 自身属性，也可以判断旧值与新值是否相等，只有满足以上两个条件之一时，才有可能执行 trigger。</p>
+<h3 id="再说一下-vue2-x-中如何监测数组变化"><a href="#再说一下-vue2-x-中如何监测数组变化" class="headerlink" title="再说一下 vue2.x 中如何监测数组变化"></a><strong>再说一下 vue2.x 中如何监测数组变化</strong></h3><p>使用了函数劫持的方式，重写了数组的方法，Vue 将 data 中的数组进行了原型链重写，指向了自己定义的数组原型方法。</p>
+<p>这样当调用数组 api 时，可以通知依赖更新。如果数组中包含着引用类型，会对数组中的引用类型再次递归遍历进行监控。这样就实现了监测数组变化。</p>
+<p>（能问到这的面试官都比较注重深度，这些常规操作要记牢）</p>
+<p>（原型链的细节可以参考我的另一篇专栏）</p>
+<h3 id="nextTick-知道吗，实现原理是什么？"><a href="#nextTick-知道吗，实现原理是什么？" class="headerlink" title="nextTick 知道吗，实现原理是什么？"></a><strong>nextTick 知道吗，实现原理是什么？</strong></h3><p>在下次 DOM 更新循环结束之后执行延迟回调。nextTick 主要使用了宏任务和微任务。根据执行环境分别尝试采用</p>
+<p>Promise</p>
+<p>MutationObserver</p>
+<p>setImmediate</p>
+<p>如果以上都不行则采用 setTimeout</p>
+<p>定义了一个异步方法，多次调用 nextTick 会将方法存入队列中，通过这个异步方法清空当前队列。</p>
+<p>（关于宏任务和微任务以及事件循环可以参考我的另两篇专栏）</p>
+<p>(看到这你就会发现，其实问框架最终还是考验你的原生 JavaScript 功底)</p>
+<h3 id="说一下-Vue-的生命周期"><a href="#说一下-Vue-的生命周期" class="headerlink" title="说一下 Vue 的生命周期"></a><strong>说一下 Vue 的生命周期</strong></h3><p>beforeCreate 是 new Vue()之后触发的第一个钩子，在当前阶段 data、methods、computed 以及 watch 上的数据和方法都不能被访问。</p>
+<p>created 在实例创建完成后发生，当前阶段已经完成了数据观测，也就是可以使用数据，更改数据，在这里更改数据不会触发 updated 函数。</p>
+<p>可以做一些初始数据的获取，在当前阶段无法与 Dom 进行交互，如果非要想，可以通过 vm.$nextTick 来访问 Dom。</p>
+<p>beforeMount 发生在挂载之前，在这之前 template 模板已导入渲染函数编译。而当前阶段虚拟 Dom 已经创建完成，即将开始渲染。</p>
+<p>在此时也可以对数据进行更改，不会触发 updated。</p>
+<p>mounted 在挂载完成后发生，在当前阶段，真实的 Dom 挂载完毕，数据完成双向绑定，可以访问到 Dom 节点，使用$refs 属性对 Dom 进行操作。</p>
+<p>beforeUpdate 发生在更新之前，也就是响应式数据发生更新，虚拟 dom 重新渲染之前被触发，你可以在当前阶段进行更改数据，不会造成重渲染。</p>
+<p>updated 发生在更新完成之后，当前阶段组件 Dom 已完成更新。要注意的是避免在此期间更改数据，因为这可能会导致无限循环的更新。</p>
+<p>beforeDestroy 发生在实例销毁之前，在当前阶段实例完全可以被使用，我们可以在这时进行善后收尾工作，比如清除计时器。</p>
+<p>destroyed 发生在实例销毁之后，这个时候只剩下了 dom 空壳。组件已被拆解，数据绑定被卸除，监听被移出，子实例也统统被销毁。</p>
+<p>(关于 Vue 的生命周期详解感兴趣的也请移步我的另一篇专栏)</p>
+<h3 id="你的接口请求一般放在哪个生命周期中？"><a href="#你的接口请求一般放在哪个生命周期中？" class="headerlink" title="你的接口请求一般放在哪个生命周期中？"></a><strong>你的接口请求一般放在哪个生命周期中？</strong></h3><p>接口请求一般放在 mounted 中，但需要注意的是服务端渲染时不支持 mounted，需要放到 created 中。</p>
+<h3 id="再说一下-Computed-和-Watch"><a href="#再说一下-Computed-和-Watch" class="headerlink" title="再说一下 Computed 和 Watch"></a><strong>再说一下 Computed 和 Watch</strong></h3><p>Computed 本质是一个具备缓存的 watcher，依赖的属性发生变化就会更新视图。适用于计算比较消耗性能的计算场景。</p>
+<p>当表达式过于复杂时，在模板中放入过多逻辑会让模板难以维护，可以将复杂的逻辑放入计算属性中处理。</p>
+<p>Watch 没有缓存性，更多的是观察的作用，可以监听某些数据执行回调。当我们需要深度监听对象中的属性时，可以打开 deep：true 选项，</p>
+<p>这样便会对对象中的每一项进行监听。这样会带来性能问题，优化的话可以使用字符串形式监听，如果没有写到组件中，不要忘记使用 unWatch 手动注销哦。</p>
+<h3 id="说一下-v-if-和-v-show-的区别"><a href="#说一下-v-if-和-v-show-的区别" class="headerlink" title="说一下 v-if 和 v-show 的区别"></a><strong>说一下 v-if 和 v-show 的区别</strong></h3><p>当条件不成立时，v-if 不会渲染 DOM 元素，v-show 操作的是样式(display)，切换当前 DOM 的显示和隐藏。</p>
+<h3 id="组件中的-data-为什么是一个函数？"><a href="#组件中的-data-为什么是一个函数？" class="headerlink" title="组件中的 data 为什么是一个函数？"></a><strong>组件中的 data 为什么是一个函数？</strong></h3><p>一个组件被复用多次的话，也就会创建多个实例。本质上，这些实例用的都是同一个构造函数。如果 data 是对象的话，对象属于引用类型，会影响到所有的实例。</p>
+<p>所以为了保证组件不同的实例之间 data 不冲突，data 必须是一个函数。</p>
+<h3 id="说一下-v-model-的原理"><a href="#说一下-v-model-的原理" class="headerlink" title="说一下 v-model 的原理"></a><strong>说一下 v-model 的原理</strong></h3><p>v-model 本质就是一个语法糖，可以看成是 value + input 方法的语法糖。可以通过 model 属性的 prop 和 event 属性来进行自定义。</p>
+<p>原生的 v-model，会根据标签的不同生成不同的事件和属性。</p>
+<h3 id="Vue-事件绑定原理说一下"><a href="#Vue-事件绑定原理说一下" class="headerlink" title="Vue 事件绑定原理说一下"></a><strong>Vue 事件绑定原理说一下</strong></h3><p>原生事件绑定是通过 addEventListener 绑定给真实元素的，组件事件绑定是通过 Vue 自定义的$on 实现的。</p>
+<h3 id="Vue-模版编译原理知道吗，能简单说一下吗？"><a href="#Vue-模版编译原理知道吗，能简单说一下吗？" class="headerlink" title="Vue 模版编译原理知道吗，能简单说一下吗？"></a><strong>Vue 模版编译原理知道吗，能简单说一下吗？</strong></h3><p>简单说，Vue 的编译过程就是将 template 转化为 render 函数的过程。会经历以下阶段：</p>
+<p>生成 AST 树</p>
+<p>优化</p>
+<p>codegen</p>
+<p>首先解析模版，生成 AST 语法树(一种用 JavaScript 对象的形式来描述整个模板)。使用大量的正则表达式对模板进行解析，</p>
+<p>遇到标签、文本的时候都会执行对应的钩子进行相关处理。</p>
+<p>Vue 的数据是响应式的，但其实模板中并不是所有的数据都是响应式的。有一些数据首次渲染后就不会再变化，对应的 DOM 也不会变化。</p>
+<p>那么优化过程就是深度遍历 AST 树，按照相关条件对树节点进行标记。这些被标记的节点(静态节点)我们就可以跳过对它们的比对，对运行时的模板起到很大的优化作用。</p>
+<p>编译的最后一步是将优化后的 AST 树转换为可执行的代码。</p>
+<h3 id="Vue2-x-和-Vue3-x-渲染器的-diff-算法分别说一下"><a href="#Vue2-x-和-Vue3-x-渲染器的-diff-算法分别说一下" class="headerlink" title="Vue2.x 和 Vue3.x 渲染器的 diff 算法分别说一下"></a><strong>Vue2.x 和 Vue3.x 渲染器的 diff 算法分别说一下</strong></h3><p>简单来说，diff 算法有以下过程</p>
+<p>同级比较，再比较子节点</p>
+<p>先判断一方有子节点一方没有子节点的情况(如果新的 children 没有子节点，将旧的子节点移除)</p>
+<p>比较都有子节点的情况(核心 diff)</p>
+<p>递归比较子节点</p>
+<p>正常 Diff 两个树的时间复杂度是 O(n^3)，但实际情况下我们很少会进行跨层级的移动 DOM，所以 Vue 将 Diff 进行了优化，从 O(n^3) -&gt; O(n)，</p>
+<p>只有当新旧 children 都为多个子节点时才需要用核心的 Diff 算法进行同层级比较。</p>
+<p>Vue2 的核心 Diff 算法采用了双端比较的算法，同时从新旧 children 的两端开始进行比较，借助 key 值找到可复用的节点，再进行相关操作。</p>
+<p>相比 React 的 Diff 算法，同样情况下可以减少移动节点次数，减少不必要的性能损耗，更加的优雅。</p>
+<p>Vue3.x 借鉴了 ivi 算法和 inferno 算法</p>
+<p>在创建 VNode 时就确定其类型，以及在 mount/patch 的过程中采用位运算来判断一个 VNode 的类型，在这个基础之上再配合核心的 Diff 算法，</p>
+<p>使得性能上较 Vue2.x 有了提升。(实际的实现可以结合 Vue3.x 源码看。)</p>
+<p>该算法中还运用了动态规划的思想求解最长递归子序列。</p>
+<p>(看到这你还会发现，框架内无处不蕴藏着数据结构和算法的魅力)</p>
+<h3 id="再说一下虚拟-Dom-以及-key-属性的作用"><a href="#再说一下虚拟-Dom-以及-key-属性的作用" class="headerlink" title="再说一下虚拟 Dom 以及 key 属性的作用"></a><strong>再说一下虚拟 Dom 以及 key 属性的作用</strong></h3><p>由于在浏览器中操作 DOM 是很昂贵的。频繁的操作 DOM，会产生一定的性能问题。这就是虚拟 Dom 的产生原因。</p>
+<p>Vue2 的 Virtual DOM 借鉴了开源库 snabbdom 的实现。</p>
+<p>Virtual DOM 本质就是用一个原生的 JS 对象去描述一个 DOM 节点。是对真实 DOM 的一层抽象。(也就是源码中的 VNode 类，它定义在 src/core/vdom/vnode.js 中。)</p>
+<p>VirtualDOM 映射到真实 DOM 要经历 VNode 的 create、diff、patch 等阶段。</p>
+<p>「key 的作用是尽可能的复用 DOM 元素。」</p>
+<p>新旧 children 中的节点只有顺序是不同的时候，最佳的操作应该是通过移动元素的位置来达到更新的目的。</p>
+<p>需要在新旧 children 的节点中保存映射关系，以便能够在旧 children 的节点中找到可复用的节点。key 也就是 children 中节点的唯一标识。</p>
+<h3 id="keep-alive-了解吗？"><a href="#keep-alive-了解吗？" class="headerlink" title="keep-alive 了解吗？"></a><strong>keep-alive 了解吗？</strong></h3><p>keep-alive 可以实现组件缓存，当组件切换时不会对当前组件进行卸载。</p>
+<p>常用的两个属性 include/exclude，允许组件有条件的进行缓存。</p>
+<p>两个生命周期 activated/deactivated，用来得知当前组件是否处于活跃状态。</p>
+<p>keep-alive 的中还运用了 LRU(Least Recently Used)算法。</p>
+<p>（又是数据结构与算法，原来算法在前端有这么多的应用）</p>
+<h3 id="Vue-中组件生命周期调用顺序说一下"><a href="#Vue-中组件生命周期调用顺序说一下" class="headerlink" title="Vue 中组件生命周期调用顺序说一下"></a><strong>Vue 中组件生命周期调用顺序说一下</strong></h3><p>组件的调用顺序都是先父后子,渲染完成的顺序是先子后父。</p>
+<p>组件的销毁操作是先父后子，销毁完成的顺序是先子后父。</p>
+<p><strong>加载渲染过程</strong></p>
+<p>父 beforeCreate-&gt;父 created-&gt;父 beforeMount-&gt;子 beforeCreate-&gt;子 created-&gt;子 beforeMount- &gt;子 mounted-&gt;父 mounted</p>
+<p><strong>子组件更新过程</strong></p>
+<p>父 beforeUpdate-&gt;子 beforeUpdate-&gt;子 updated-&gt;父 updated</p>
+<p><strong>父组件更新过程</strong></p>
+<p>父 beforeUpdate -&gt; 父 updated</p>
+<p><strong>销毁过程</strong></p>
+<p>父 beforeDestroy-&gt;子 beforeDestroy-&gt;子 destroyed-&gt;父 destroyed</p>
+<h3 id="Vue2-x-组件通信有哪些方式？"><a href="#Vue2-x-组件通信有哪些方式？" class="headerlink" title="Vue2.x 组件通信有哪些方式？"></a>Vue2.x 组件通信有哪些方式？</h3><p><strong>父子组件通信</strong></p>
+<p>父-&gt;子 props，子-&gt;父 $on、$emit</p>
+<p>获取父子组件实例 $parent、$children</p>
+<p>Ref 获取实例的方式调用组件的属性或者方法</p>
+<p>Provide、inject 官方不推荐使用，但是写组件库时很常用</p>
+<p><strong>兄弟组件通信</strong></p>
+<p>Event Bus 实现跨组件通信 Vue.prototype.$bus = new Vue</p>
+<p>Vuex</p>
+<p><strong>跨级组件通信</strong></p>
+<p>Vuex</p>
+<p>$attrs、$listeners</p>
+<p>Provide、inject</p>
+<h3 id="SSR-了解吗？有什么好处？"><a href="#SSR-了解吗？有什么好处？" class="headerlink" title="SSR 了解吗？有什么好处？"></a>SSR 了解吗？有什么好处？</h3><p>SSR 也就是服务端渲染，也就是将 Vue 在客户端把标签渲染成 HTML 的工作放在服务端完成，然后再把 html 直接返回给客户端。客户端拿到手的，是可以直接渲染然后呈现给用户的 HTML 内容，不需要为了生成 DOM 内容自己再去跑一遍 JS 代码。</p>
+<p>SSR 有着更好的 SEO、并且首屏加载速度更快等优点。事实上，很多网站是出于效益(seo)的考虑才启用服务端渲染，性能倒是在其次。假设 A 网站页面中有一个关键字叫“前端性能优化”，这个关键字是 JS 代码跑过一遍后添加到 HTML 页面中的。那么客户端渲染模式下，我们在搜索引擎搜索这个关键字，是找不到 A 网站的——<strong>搜索引擎只会查找现成的内容，不会帮你跑 JS 代码</strong>。A 网站的运营方见此情形，感到很头大：搜索引擎搜不出来，用户找不到我们，谁还会用我的网站呢？为了把“现成的内容”拿给搜索引擎看，A 网站不得不启用服务端渲染。</p>
+<p>不过它也有一些缺点，比如我们的开发条件会受到限制，服务器端渲染只支持 beforeCreate 和 created 两个钩子，当我们需要一些外部扩展库时需要特殊处理，服务端渲染应用程序也需要处于 Node.js 的运行环境。还有就是服务器会有更大的负载需求。</p>
+<h3 id="你都做过哪些-Vue-的性能优化？"><a href="#你都做过哪些-Vue-的性能优化？" class="headerlink" title="你都做过哪些 Vue 的性能优化？"></a><strong>你都做过哪些 Vue 的性能优化？</strong></h3><p>编码阶段</p>
+<p>尽量减少 data 中的数据，data 中的数据都会增加 getter 和 setter，会收集对应的 watcher</p>
+<p>v-if 和 v-for 不能连用</p>
+<p>如果需要使用 v-for 给每项元素绑定事件时使用事件代理</p>
+<p>SPA 页面采用 keep-alive 缓存组件</p>
+<p>在更多的情况下，使用 v-if 替代 v-show</p>
+<p>key 保证唯一</p>
+<p>使用路由懒加载、异步组件</p>
+<p>防抖、节流</p>
+<p>第三方模块按需导入</p>
+<p>长列表滚动到可视区域动态加载</p>
+<p>图片懒加载</p>
+<p><strong>SEO 优化</strong></p>
+<p>预渲染</p>
+<p>服务端渲染 SSR</p>
+<p><strong>打包优化</strong></p>
+<p>压缩代码</p>
+<p>Tree Shaking/Scope Hoisting</p>
+<p>使用 cdn 加载第三方模块</p>
+<p>多线程打包 happypack</p>
+<p>splitChunks 抽离公共文件</p>
+<p>sourceMap 优化</p>
+<p><strong>用户体验</strong></p>
+<p>骨架屏</p>
+<p>PWA</p>
+<p>还可以使用缓存(客户端缓存、服务端缓存)优化、服务端开启 gzip 压缩等。</p>
+<p>(优化是个大工程，会涉及很多方面，这里申请另开一个专栏)</p>
+<h3 id="hash-路由和-history-路由实现原理说一下"><a href="#hash-路由和-history-路由实现原理说一下" class="headerlink" title="hash 路由和 history 路由实现原理说一下"></a><strong>hash 路由和 history 路由实现原理说一下</strong></h3><p>location.hash 的值实际就是 URL 中#后面的东西。</p>
+<p>history 实际采用了 HTML5 中提供的 API 来实现，主要有 history.pushState()和 history.replaceState()。</p>
+<h3 id="Vue-Router导航守卫知道吗"><a href="#Vue-Router导航守卫知道吗" class="headerlink" title="Vue-Router导航守卫知道吗"></a>Vue-Router导航守卫知道吗</h3><p>Vue路由导航守卫分为全局守卫、路由独享守卫、组件内守卫</p>
+<ol>
+<li><p>全局守卫：</p>
+<ul>
+<li><p>全局前置守卫：router.beforeEach((to,from,next)=&gt;{})</p>
+<p>to：进入到哪个路由去，from：从哪个路由离开，next：函数，决定是否展示你要看到的路由页面。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在main.js中设置守卫已是全局守卫。</span></span><br><span class="line"><span class="comment">//如下，判断to.path当前将要进入的路径是否为登录或注册，如果是就执行next()，展示当前界面。如果不是，就弹出alert，然后移至登录界面。</span></span><br><span class="line"><span class="comment">//这样就可实现，用户在未登录状态下，展示的一直是登录界面。</span></span><br><span class="line">router.beforeEach(<span class="function">(<span class="params">to,<span class="keyword">from</span>,next</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(to.path == <span class="string">'/login'</span> || to.path == <span class="string">'/register'</span>)&#123;</span><br><span class="line">    next();</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    alert(<span class="string">'您还没有登录，请先登录'</span>);</span><br><span class="line">    next(<span class="string">'/login'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>全局解析守卫：</p>
+<p>在 2.5.0+ 你可以用 <code>router.beforeResolve</code> 注册一个全局守卫。这和 <code>router.beforeEach</code> 类似，区别是在导航被确认之前，<strong>同时在所有组件内守卫和异步路由组件被解析之后</strong>，解析守卫就被调用。</p>
+</li>
+<li><p>全局后置钩子：router.afterEach((to,from)=&gt;{})</p>
+<p>to：进入到哪个路由去，from：从哪个路由离开。</p>
+</li>
+</ul>
+</li>
+<li><p>组件内守卫</p>
+<ul>
+<li><p><code>beforeRouteEnter</code></p>
+</li>
+<li><p><code>beforeRouteUpdate</code> (2.2 新增)</p>
+</li>
+<li><p><code>beforeRouteLeave</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">beforeRouteEnter(to, <span class="keyword">from</span>, next) &#123;</span><br><span class="line">    <span class="comment">// 在渲染该组件的对应路由被 confirm 前调用</span></span><br><span class="line">    <span class="comment">// 不！能！获取组件实例 `this`</span></span><br><span class="line">    <span class="comment">// 因为当守卫执行前，组件实例还没被创建</span></span><br><span class="line">&#125;,</span><br><span class="line">beforeRouteUpdate(to, <span class="keyword">from</span>, next) &#123;</span><br><span class="line">    <span class="comment">// 在当前路由改变，但是该组件被复用时调用</span></span><br><span class="line">    <span class="comment">// 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，</span></span><br><span class="line">    <span class="comment">// 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。</span></span><br><span class="line">    <span class="comment">// 可以访问组件实例 `this`</span></span><br><span class="line">&#125;,</span><br><span class="line">beforeRouteLeave(to, <span class="keyword">from</span>, next) &#123;</span><br><span class="line">    <span class="comment">// 导航离开该组件的对应路由时调用</span></span><br><span class="line">    <span class="comment">// 可以访问组件实例 `this`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>路由独享守卫</p>
+<p><strong>beforeEnter</strong>：(to,from,next)=&gt;{}，用法与全局守卫一致。只是，将其写进其中一个路由对象中，只在这个路由下起作用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">  routes: [</span><br><span class="line">    &#123;</span><br><span class="line">      path: <span class="string">'/foo'</span>,</span><br><span class="line">      component: Foo,</span><br><span class="line">      beforeEnter: <span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h3 id="Vue-Router完整的导航解析流程"><a href="#Vue-Router完整的导航解析流程" class="headerlink" title="Vue-Router完整的导航解析流程"></a>Vue-Router完整的导航解析流程</h3><ol>
+<li>导航被触发。</li>
+<li>在失活的组件里调用 <code>beforeRouteLeave</code> 守卫。</li>
+<li>调用全局的 <code>beforeEach</code> 守卫。</li>
+<li>在重用的组件里调用 <code>beforeRouteUpdate</code> 守卫 (2.2+)。</li>
+<li>在路由配置里调用 <code>beforeEnter</code>。</li>
+<li>解析异步路由组件。</li>
+<li>在被激活的组件里调用 <code>beforeRouteEnter</code>。</li>
+<li>调用全局的 <code>beforeResolve</code> 守卫 (2.5+)。</li>
+<li>导航被确认。</li>
+<li>调用全局的 <code>afterEach</code> 钩子。</li>
+<li>触发 DOM 更新。</li>
+<li>调用 <code>beforeRouteEnter</code> 守卫中传给 <code>next</code> 的回调函数，创建好的组件实例会作为回调函数的参数传入。</li>
+</ol>
+<h3 id="vue怎么制作自定义指令？自定义指令中获取到的el是dom渲染前还是渲染后？"><a href="#vue怎么制作自定义指令？自定义指令中获取到的el是dom渲染前还是渲染后？" class="headerlink" title="vue怎么制作自定义指令？自定义指令中获取到的el是dom渲染前还是渲染后？"></a>vue怎么制作自定义指令？自定义指令中获取到的el是dom渲染前还是渲染后？</h3><h3 id="用vue做权限管理怎么做？"><a href="#用vue做权限管理怎么做？" class="headerlink" title="用vue做权限管理怎么做？"></a>用vue做权限管理怎么做？</h3><h3 id="webpack怎么压缩代码"><a href="#webpack怎么压缩代码" class="headerlink" title="webpack怎么压缩代码"></a>webpack怎么压缩代码</h3><p>1.HTML压缩：html-webpack-plugin,使用<code>minify</code>参数真正传入<code>html-minifier</code>的配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">    template: path.join(__dirname, <span class="string">'src/index.html'</span>),</span><br><span class="line">    filename: <span class="string">'index.html'</span>,</span><br><span class="line">    chunks: [<span class="string">'index'</span>],</span><br><span class="line">    inject: <span class="literal">true</span>,</span><br><span class="line">    minify: &#123;</span><br><span class="line">        html5: <span class="literal">true</span>, <span class="comment">// 根据HTML5规范解析输入</span></span><br><span class="line">        collapseWhitespace: <span class="literal">true</span>, <span class="comment">// 折叠空白区域</span></span><br><span class="line">        preserveLineBreaks: <span class="literal">false</span>, <span class="comment">// 当标记之间的空格包含换行符时，始终折叠为1换行符（不完全删除它）。必须与collapseWhitespace=true一起使用</span></span><br><span class="line">        minifyCSS: <span class="literal">true</span>, <span class="comment">// 压缩文内css</span></span><br><span class="line">        minifyJS: <span class="literal">true</span>, <span class="comment">// 压缩文内js</span></span><br><span class="line">        removeComments: <span class="literal">false</span> <span class="comment">// 移除注释</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>2.css压缩：需要用到<code>optimize-css-assets-webpack-plugin</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> OptimizeCssAssetsWebpackPlugin(&#123;</span><br><span class="line">    assetNameRegExp: <span class="regexp">/\.css$/g</span>,</span><br><span class="line">    cssProcessor: <span class="built_in">require</span>(<span class="string">'cssnano'</span>), <span class="comment">// 引入cssnano配置压缩选项</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>3.js压缩：<code>webpack v4</code>内置了<code>uglifyjs-webpack-plugin</code>，所以我们默认打包就会压缩js文件。但是如果你想有特殊的配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> UglifyJSPlugin = <span class="built_in">require</span>(<span class="string">'webpack/lib/optimize/UglifyJsPlugin'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="comment">// 压缩输出的 JS 代码</span></span><br><span class="line">    <span class="keyword">new</span> UglifyJSPlugin(&#123;</span><br><span class="line">      compress: &#123;</span><br><span class="line">        <span class="comment">// 在UglifyJs删除没有用到的代码时不输出警告</span></span><br><span class="line">        warnings: <span class="literal">false</span>,</span><br><span class="line">        <span class="comment">// 删除所有的 `console` 语句，可以兼容ie浏览器</span></span><br><span class="line">        drop_console: <span class="literal">true</span>,</span><br><span class="line">        <span class="comment">// 内嵌定义了但是只用到一次的变量</span></span><br><span class="line">        collapse_vars: <span class="literal">true</span>,</span><br><span class="line">        <span class="comment">// 提取出出现多次但是没有定义成变量去引用的静态值</span></span><br><span class="line">        reduce_vars: <span class="literal">true</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      output: &#123;</span><br><span class="line">        <span class="comment">// 最紧凑的输出</span></span><br><span class="line">        beautify: <span class="literal">false</span>,</span><br><span class="line">        <span class="comment">// 删除所有的注释</span></span><br><span class="line">        comments: <span class="literal">false</span>,</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;),</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Git相关"><a href="#Git相关" class="headerlink" title="Git相关"></a>Git相关</h2><h3 id="常用git指令，怎么回滚代码？怎么删除特定提交。"><a href="#常用git指令，怎么回滚代码？怎么删除特定提交。" class="headerlink" title="常用git指令，怎么回滚代码？怎么删除特定提交。"></a>常用git指令，怎么回滚代码？怎么删除特定提交。</h3><h2 id="网络请求相关"><a href="#网络请求相关" class="headerlink" title="网络请求相关"></a>网络请求相关</h2><h3 id="在浏览器打开一个url显示白屏，如何排查问题"><a href="#在浏览器打开一个url显示白屏，如何排查问题" class="headerlink" title="在浏览器打开一个url显示白屏，如何排查问题"></a>在浏览器打开一个url显示白屏，如何排查问题</h3><p>1、先确保网络连接通畅。<br>2、查看网络url地址是否输入有误。<br>3、打开控制台查看报错信息，看看页面上有没有元素，是不是被隐藏了。<br>4、查看接口访问是否有请求。<br>5、查看路由是否有path或者name的错误，导致加载了不存在的页面。</p>
+<h3 id="常规的网络攻击方式有哪些？分别怎么防范？"><a href="#常规的网络攻击方式有哪些？分别怎么防范？" class="headerlink" title="常规的网络攻击方式有哪些？分别怎么防范？"></a>常规的网络攻击方式有哪些？分别怎么防范？</h3><p>可参考我的另一篇文章<a href="https://xasier.gitee.io/xasier/posts/web_safe/" target="_blank" rel="noopener">关于浏览器安全【同源限制/XSS/CSRF/中间人攻击】</a></p>
+<h3 id="从-URL-输入到页面展现到底发生什么？-参考链接"><a href="#从-URL-输入到页面展现到底发生什么？-参考链接" class="headerlink" title="从 URL 输入到页面展现到底发生什么？ 参考链接"></a>从 URL 输入到页面展现到底发生什么？ <a href="https://blog.fundebug.com/2019/02/28/what-happens-from-url-to-webpage/" target="_blank" rel="noopener">参考链接</a></h3><h3 id="什么是跨域？跨域请求资源的方法有那些？"><a href="#什么是跨域？跨域请求资源的方法有那些？" class="headerlink" title="什么是跨域？跨域请求资源的方法有那些？"></a>什么是跨域？跨域请求资源的方法有那些？</h3><h3 id="开发过程中遇到的内存泄露情况，如何解决的？"><a href="#开发过程中遇到的内存泄露情况，如何解决的？" class="headerlink" title="开发过程中遇到的内存泄露情况，如何解决的？"></a>开发过程中遇到的内存泄露情况，如何解决的？</h3><h3 id="请求方式以及get和post请求在缓存方面的区别"><a href="#请求方式以及get和post请求在缓存方面的区别" class="headerlink" title="请求方式以及get和post请求在缓存方面的区别"></a>请求方式以及get和post请求在缓存方面的区别</h3><h2 id="手撕篇章"><a href="#手撕篇章" class="headerlink" title="手撕篇章"></a>手撕篇章</h2><h3 id="原生ajax请求"><a href="#原生ajax请求" class="headerlink" title="原生ajax请求"></a>原生ajax请求</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.ajax = <span class="function"><span class="keyword">function</span> (<span class="params">reqData</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 检查url 合法性</span></span><br><span class="line">    <span class="keyword">let</span> url = reqData.url.trim()</span><br><span class="line">    <span class="keyword">if</span>(!reqData.url)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="string">'url 为空'</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 检查请求方式 合法性</span></span><br><span class="line">    <span class="keyword">let</span> method = reqData.method.trim()</span><br><span class="line">    method = method.toLowerCase()</span><br><span class="line">    <span class="keyword">if</span>(!method)&#123;</span><br><span class="line">            method = <span class="string">'get'</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!(<span class="number">-1</span> &lt; <span class="string">'get'</span>.indexOf(method) || <span class="number">-1</span> &lt; <span class="string">'post'</span>.indexOf(method)))&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="string">'method 错误'</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> fd = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">let</span> data = reqData.data</span><br><span class="line">    <span class="keyword">if</span>(data)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">'get'</span> == method)&#123;</span><br><span class="line">            url += <span class="string">'?'</span></span><br><span class="line">          <span class="keyword">for</span>(<span class="keyword">const</span> key <span class="keyword">in</span> data)&#123;</span><br><span class="line">            url += <span class="string">`<span class="subst">$&#123;key&#125;</span>=<span class="subst">$&#123;data[key]&#125;</span>&amp;`</span></span><br><span class="line">          &#125;  </span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            fd = <span class="keyword">new</span> FormData()</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">const</span> key <span class="keyword">in</span> data)&#123;</span><br><span class="line">               fd.append(key,data[key])</span><br><span class="line">            &#125;   </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 实例化请求对象</span></span><br><span class="line">    <span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line">    <span class="comment">// 设置请求参数</span></span><br><span class="line">    xhr.open( method, url, <span class="literal">true</span> )</span><br><span class="line">    <span class="comment">// 设置超时</span></span><br><span class="line">    <span class="keyword">if</span>( reqData.timeout )&#123;</span><br><span class="line">        xhr.timeout = reqData.timeout</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// xhr.setRequestHeader()</span></span><br><span class="line">    <span class="keyword">let</span> reqHeader = reqData.reqHeader</span><br><span class="line">    <span class="keyword">if</span>(reqHeader)&#123;</span><br><span class="line">        xhr.setRequestHeader(reqHeader.name,reqHeader.value)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 发送请求</span></span><br><span class="line">    xhr.send(fd)</span><br><span class="line">    <span class="comment">// 监听响应信息</span></span><br><span class="line">    xhr.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="number">200</span> == <span class="keyword">this</span>.status &amp;&amp; <span class="number">4</span> == <span class="keyword">this</span>.readyState)&#123;</span><br><span class="line">           <span class="keyword">try</span> &#123;</span><br><span class="line">                reqData.callback( <span class="built_in">JSON</span>.parse(<span class="keyword">this</span>.responseText ) )</span><br><span class="line">           &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">                reqData.callback( <span class="keyword">this</span>.responseText  )</span><br><span class="line">           &#125;</span><br><span class="line">         </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="axios怎么实现拦截器"><a href="#axios怎么实现拦截器" class="headerlink" title="axios怎么实现拦截器"></a>axios怎么实现拦截器</h3><p><a href="https://www.jianshu.com/p/115b4c79a75d" target="_blank" rel="noopener">Axios的拦截器原理以及请求等待重发的实现</a></p>
+<h3 id="防抖节流"><a href="#防抖节流" class="headerlink" title="防抖节流"></a>防抖节流</h3><p>所谓防抖，就是指触发事件后在 n 秒内函数只能执行一次，如果在 n 秒内又触发了事件，则会重新计算函数执行时间。(通俗的讲就是在触发点击事件后，如果用户再次点击了，我们会清空之前的定时器，重新生成一个定时器。)</p>
+<p>应用：有个输入框，输入之后会调用接口，获取联想词。但是，因为频繁调用接口不太好，所以我们在代码中使用防抖功能，只有在用户输入完毕的一段时间后，才会调用接口，出现联想词</p>
+<p>防抖分立即执行和非立即执行：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">func,wait,immediate</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> timeout;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> context = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">let</span> args = <span class="built_in">arguments</span>;</span><br><span class="line">        <span class="comment">// 防抖函数的代码使用这两行代码来获取 this 和 参数，是为了让 debounce 函数最终返回的函数 this 指向不变以及依旧能接受到 e 参数。</span></span><br><span class="line">        <span class="keyword">if</span> (timeout) clearTimeout(timeout);</span><br><span class="line">        <span class="keyword">if</span> (immediate) &#123; <span class="comment">// 立即执行</span></span><br><span class="line">            <span class="keyword">let</span> callNow = !timeout;</span><br><span class="line">            timeout = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                timeout = <span class="literal">null</span>;</span><br><span class="line">            &#125;, wait)</span><br><span class="line">            <span class="keyword">if</span> (callNow) func.apply(context, args)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123; <span class="comment">// 非立即执行</span></span><br><span class="line">            timeout = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                func.apply(context, args)</span><br><span class="line">            &#125;, wait);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所谓节流，就是指连续触发事件但是在 n 秒中只执行一次函数。节流会稀释函数的执行频率。</p>
+<p>应用：</p>
+<ol>
+<li>懒加载要监听计算滚动条的位置，使用节流按一定时间的频率获取。</li>
+<li>用户点击提交按钮，假设我们知道接口大致的返回时间的情况下，我们使用节流，只允许一定时间内点击一次。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">func, wait</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> timeout;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> context = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">let</span> args = <span class="built_in">arguments</span>;</span><br><span class="line">        <span class="keyword">if</span> (!timeout) &#123;</span><br><span class="line">            timeout = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                timeout = <span class="literal">null</span>;</span><br><span class="line">                func.apply(context, args)</span><br><span class="line">            &#125;, wait)</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Shinex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xiasy1.gitub.io/posts/FE-interview/">https://xiasy1.gitub.io/posts/FE-interview/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xiasy1.gitub.io" target="_blank">圣逸の博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/xiasy1.github.io/tags/FE-interview/">FE-interview</a></div><div class="post_share"><div class="social-share" data-image="/xiasy1.github.io/img/mq.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/xiasy1.github.io/posts/VueUse/"><img class="prev-cover" data-src="/xiasy1.github.io/img/VueUse.png" onerror="onerror=null;src='/xiasy1.github.io/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">5 个可以加速开发的 VueUse 库函数</div></div></a></div><div class="next-post pull-right"><a href="/xiasy1.github.io/posts/leetcode01/"><img class="next-cover" data-src="/xiasy1.github.io/img/LeetCode.jpeg" onerror="onerror=null;src='/xiasy1.github.io/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">LeetCode数据结构与算法--过关斩将（持续更新...）</div></div></a></div></nav><hr><div id="post-comment"><div class="comment-head"><div class="comment-headling"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"><span class="slider"></span></label><span class="second-comment">Gitalk</span></div></div><div class="comment-wrap"><div class="comments-items-1" data-name="Valine"><div class="vcomment" id="vcomment"></div><script>function loadvaline () {  
+  var requestSetting = function (from,set) {
+    var from = from
+    var setting = set.split(',').filter(function(item){
+    return from.indexOf(item) > -1
+    });
+    setting = setting.length == 0 ? from :setting;
+    return setting
+  }
+
+  var guestInfo = requestSetting(['nick','mail','link'],'nick,mail,link')
+  var requiredFields = requestSetting(['nick','mail'],'nick,mail')
+
+  function initValine () {
+    window.valine = new Valine({
+      el:'#vcomment',
+      appId: '7XBOk1NFgzXrgIGbdDrPmHyh-gzGzoHsz',
+      appKey: 'f4pCnWPOMzJlkDWw6Idr46cR',
+      placeholder: '留下你的足迹吧，邮箱必填哦~',
+      avatar: 'monsterid',
+      meta: guestInfo,
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      requiredFields: requiredFields
+    });
+  }
+  loadScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || false) {
+  window.addEventListener('load', loadvaline)
+}
+else {
+  function loadOtherComment () {
+    loadvaline()
+  }
+}</script></div><div class="comments-items-2" data-name="Gitalk"><div id="gitalk-container"></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5/js/md5.min.js"></script><script>function loadGitalk () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+
+  loadScript('https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js', function () {
+    var gitalk = new Gitalk({
+      clientID: '4f1050ca77c3a6ebb3b5',
+      clientSecret: '5465aa18fe87a0d9e9f37e5eae7090c14da49c0a',
+      repo: 'xasier-blog-coment',
+      owner: 'xiasy1',
+      admin: ['xiasy1'],
+      id: md5(decodeURI(location.pathname)),
+      language: 'zh-CN',
+      perPage: 10,
+      distractionFreeMode: false,
+      pagerDirection: 'last',
+      createIssueManually: false,
+      updateCountCallback: commentCount
+    })
+    gitalk.render('gitalk-container')
+  })
+
+  function commentCount(n){
+    try {
+      document.getElementsByClassName('gitalk-comment-count')[0].innerHTML= n
+    } catch (e) {
+      return false
+    }
+  }
+}
+
+if ('Valine' === 'Gitalk' || false) {
+  window.addEventListener('load', loadGitalk)
+}
+else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022  <i id="heartbeat" class="fa fas fa-heartbeat"></i> Shinex</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div><head><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/HCLonely/images@master/others/heartbeat.min.css"><meta name="generator" content="Hexo 4.2.0"></head></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script><script src="/xiasy1.github.io/js/utils.js"></script><script src="/xiasy1.github.io/js/main.js"></script><script src="/xiasy1.github.io/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script src="/xiasy1.github.io/js/third-party/ClickShowText.js"></script><script src="/xasier/js/calendar.js"></script><script src="/xasier/js/languages.js"></script><script src="/xiasy1.github.io/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/xiasy1.github.io/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":120,"height":260},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
